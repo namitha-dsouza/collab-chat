@@ -1,19 +1,10 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
+import { server, io } from './lib/socket';
+const PORT = process.env.PORT || 4000;
 
-dotenv.config()
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
-const app = express()
-const PORT = process.env.PORT || 4000
-
-app.use(cors())
-app.use(express.json())
-
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok' })
-})
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
