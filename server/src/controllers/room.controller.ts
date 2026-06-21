@@ -44,3 +44,26 @@ export const getRooms = async (req: AuthRequest, res: Response) => {
     })
   }
 }
+
+export const getMessages = async (req: AuthRequest, res: Response) => {
+  try {
+    const { roomId } = req.params
+    const { cursor } = req.query
+
+    const messages = await prisma.message.findMany({
+      where: {
+        roomId,
+        ...(cursor && { createdAt: { lt: new Date(cursor as string) } })
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 20
+    })
+
+    return res.status(200).json(messages)
+  } catch (error: unknown) {
+    return res.status(500).json({
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : String(error)
+    })
+  }
+}
