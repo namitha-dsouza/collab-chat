@@ -12,7 +12,8 @@
     "ignoreDeprecations": "6.0",
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "allowJs": true
+    "allowJs": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

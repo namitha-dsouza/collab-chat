@@ -15,6 +15,12 @@ export const loginSchema = z.object({
 export const messageSchema = z.object({
    content: z.string().min(1).max(500)
 });
+
+export const roomSchema = z.object({
+  name: z.string().min(1).max(100)
+})
+
+export type RoomInput = z.infer<typeof roomSchema>
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type MessageInput = z.infer<typeof messageSchema>;

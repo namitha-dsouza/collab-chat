@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { registerSchema, loginSchema } from '../schema/auth.schema'
+import { registerSchema, loginSchema } from '../schema'
 import prisma from '../lib/prisma';
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
