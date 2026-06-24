@@ -1,8 +1,10 @@
 import prisma from './lib/prisma';
 import { server, io } from './lib/socket';
+import redisClient from './lib/redis';
 const PORT = process.env.PORT || 4000;
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
+  await redisClient.set(`presence:${socket.data.user.id}`, 'online', { EX: 30 })
   console.log('a user connected');
   socket.on('join_room', (roomId) => {
     socket.join(roomId)
@@ -58,6 +60,17 @@ io.on('connection', (socket) => {
       email: socket.data.user.email
     })
   })
+
+  socket.on('disconnect', async () => {
+  await redisClient.del(`presence:${socket.data.user.id}`)
+  console.log(`${socket.data.user.email} disconnected`)
+
+  socket.rooms.forEach(roomId => {
+    socket.to(roomId).emit('user_offline', {
+      userId: socket.data.user.id
+    })
+  })
+})
 })
 
 
