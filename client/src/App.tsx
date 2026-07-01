@@ -3,6 +3,7 @@ import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import RoomListPage from './pages/RoomListPage'
 import ProtectedRoute from './components/ProtectedRoute'
+import ChatRoomPage from './pages/ChatRoomPage'
 
 function App() {
   return (
@@ -13,6 +14,11 @@ function App() {
         <Route path="/rooms" element={
           <ProtectedRoute>
             <RoomListPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/rooms/:roomId" element={
+          <ProtectedRoute>
+            <ChatRoomPage />
           </ProtectedRoute>
         } />
       </Routes>
